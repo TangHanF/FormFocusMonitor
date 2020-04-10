@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +13,9 @@ namespace 监控哪个窗体获取焦点
 {
     public partial class Form1 : Form
     {
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern int SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int Width, int Height, int flags);
+        
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern IntPtr GetForegroundWindow();//获取当前激活窗口 
 
@@ -55,6 +58,7 @@ namespace 监控哪个窗体获取焦点
             //让窗体始终处于置顶状态
             //IntPtr hDeskTop = FindWindow("Progman", "Program Manager");
             //SetParent(this.Handle, hDeskTop);
+            SetWindowPos(this.Handle, -1, 0, 0, 0, 0, 1 | 2); //最后参数也有用1 | 4　
         }
     }
 }
